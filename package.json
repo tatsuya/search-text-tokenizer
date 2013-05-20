@@ -1,0 +1,26 @@
+{
+  "name": "search-text-tokenizer",
+  "version": "0.0.1",
+  "description": "A tokenizer for Google-like search text",
+  "main": "index",
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/tatsuyaoiw/search-text-tokenizer.git"
+  },
+  "author": "Tatsuya Oiwa <tatsuyaoiw@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "tokenizer",
+    "search",
+    "text",
+    "query",
+    "keyword"
+  ]
+}
