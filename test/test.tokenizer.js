@@ -39,7 +39,7 @@ describe('tokenizer', function(){
 
   it('should support broken phrase', function(){
     tokenizer('red bull "gives you wings')
-      .should.eql(['red', 'bull', '"gives you wings']);
+      .should.eql(['red', 'bull', '"gives', 'you', 'wings']);
   });
 
   it('should support broken phrase 2', function(){
