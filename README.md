@@ -1,5 +1,7 @@
 # search-text-tokenizer
 
+[![Build Status](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer.svg?branch=master)](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer)
+
 search-text-tokenizer is a text tokenizer for Google-like search query supporting double quoted phrase.
 
 ```js
