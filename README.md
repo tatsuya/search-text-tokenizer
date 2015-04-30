@@ -24,7 +24,7 @@ $ npm install search-text-tokenizer
 
 ## Running test
 
-To run the test suite first invoke the following command within the repo, installing the development dependencies:
+To run the test suite first invoke the following command in the project directory.
 
 ```
 $ npm install
