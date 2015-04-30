@@ -2,7 +2,12 @@
 
 [![Build Status](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer.svg?branch=master)](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer)
 
-search-text-tokenizer is a text tokenizer for Google-like search query supporting double quoted phrase.
+Tokenize a search keyword text in the same manner as Google does.
+
+- Split space-delimitered keyword string into an array of keywords
+- Treat dobule-quoted keywords as phrase
+
+## Example
 
 ```js
 var tokenizer = require('search-text-tokenizer');
@@ -28,5 +33,9 @@ $ npm install
 then run the tests:
 
 ```
-$ make test
+$ npm test
 ```
+
+## License
+
+MIT © Tatsuya Oiwa
