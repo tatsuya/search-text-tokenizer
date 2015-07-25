@@ -10,10 +10,8 @@
   "scripts": {
     "test": "make test"
   },
-  "repository": {
-    "type" : "git",
-    "url" : "http://github.com/tatsuyaoiw/search-text-tokenizer.git"
-  },
+  "repository": "tatsuyaoiw/search-text-tokenizer",
+  "bugs": "https://github.com/tatsuyaoiw/search-text-tokenizer/issues",
   "author": "Tatsuya Oiwa <tatsuyaoiw@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -22,5 +20,8 @@
     "text",
     "query",
     "keyword"
-  ]
+  ],
+  "dependencies": {
+    "lodash": "^3.10.0"
+  }
 }

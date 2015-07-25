@@ -29,12 +29,12 @@ describe('tokenizer', function(){
 
   it('should support double quoted phrases', function(){
     tokenizer('"red bull"')
-      .should.eql(['"red bull"']);
+      .should.eql(['red bull']);
   });
 
   it('should support single quoted phrases', function(){
     tokenizer("'red bull'")
-      .should.eql(["'red bull'"]);
+      .should.eql(['red bull']);
   });
 
   it('should not interpret apostrophes as single quoted phrases', function(){
@@ -44,12 +44,12 @@ describe('tokenizer', function(){
 
   it('should support multiple phrases', function(){
     tokenizer('"red bull" "gives you wings"')
-      .should.eql(['"red bull"', '"gives you wings"']);
+      .should.eql(['red bull', 'gives you wings']);
   });
 
-  it('should support a single words and phrases', function(){
+  it('should support single words and phrases', function(){
     tokenizer('red bull "gives you wings"')
-      .should.eql(['red', 'bull', '"gives you wings"']);
+      .should.eql(['red', 'bull', 'gives you wings']);
   });
 
   it('should support broken phrases', function(){
