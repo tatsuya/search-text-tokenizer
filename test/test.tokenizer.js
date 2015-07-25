@@ -2,29 +2,44 @@ var tokenizer = require('../lib/tokenizer')
   , should = require('should');
 
 describe('tokenizer', function(){
-  it('should support single word', function(){
-    tokenizer('redbull').should.eql(['redbull']);
+  it('should support single word inputs', function(){
+    tokenizer('redbull')
+      .should.eql(['redbull']);
   });
 
   it('should support multiple words', function(){
-    tokenizer('red bull').should.eql(['red', 'bull']);
+    tokenizer('red bull')
+      .should.eql(['red', 'bull']);
   });
 
-  it('should ignore empty query', function(){
-    tokenizer('').should.eql('');
+  it('should ignore empty queries', function(){
+    tokenizer('')
+      .should.eql(['']);
   });
 
-  it('should ignore space', function(){
-    tokenizer(' ').should.eql('');
+  it('should ignore spaces', function(){
+    tokenizer(' ')
+      .should.eql(['']);
   });
 
   it('should trim spaces', function(){
-    tokenizer(' redbull ').should.eql(['redbull']);
+    tokenizer(' redbull ')
+      .should.eql(['redbull']);
   });
 
-  it('should support phrase', function(){
+  it('should support double quoted phrases', function(){
     tokenizer('"red bull"')
       .should.eql(['"red bull"']);
+  });
+
+  it('should support single quoted phrases', function(){
+    tokenizer("'red bull'")
+      .should.eql(["'red bull'"]);
+  });
+
+  it('should not interpret apostrophes as single quoted phrases', function(){
+    tokenizer("don't won't")
+      .should.eql(["don't", "won't"]);
   });
 
   it('should support multiple phrases', function(){
@@ -32,17 +47,17 @@ describe('tokenizer', function(){
       .should.eql(['"red bull"', '"gives you wings"']);
   });
 
-  it('should support pair of word and phrase', function(){
+  it('should support a single words and phrases', function(){
     tokenizer('red bull "gives you wings"')
       .should.eql(['red', 'bull', '"gives you wings"']);
   });
 
-  it('should support broken phrase', function(){
+  it('should support broken phrases', function(){
     tokenizer('red bull "gives you wings')
       .should.eql(['red', 'bull', '"gives', 'you', 'wings']);
   });
 
-  it('should support broken phrase 2', function(){
+  it('should support broken phrases (2)', function(){
     tokenizer('red bull gives you wings"')
       .should.eql(['red', 'bull', 'gives', 'you', 'wings"']);
   });
