@@ -25,9 +25,9 @@ describe( 'tokenizer', function()
 	
 	it( 'should handle empty queries', function() {
 		tokenizer( '' )
-			.should.jsonEql( [''] );
+			.should.jsonEql( [] );
 		tokenizer( ' ' )
-			.should.jsonEql( [''] );
+			.should.jsonEql( [] );
 	});
 	
 	it( 'should trim spaces', function() {
@@ -65,5 +65,23 @@ describe( 'tokenizer', function()
 			.should.jsonEql( ['red', 'bull', '"gives', 'you', 'wings'] );
 		tokenizer( 'red bull gives you wings"' )
 			.should.jsonEql( ['red', 'bull', 'gives', 'you', 'wings"'] );
+	});
+	
+	it( 'should support tagged words', function() {
+		var result = tokenizer( 'author:tolkien' );
+		result.should.jsonEql( ['tolkien'] );
+		result[0].tag.should.eql( 'author' );
+	});
+	
+	it( 'should support tagged phrases', function() {
+		var result = tokenizer( 'author:"j. r. r. tolkien"' );
+		result.should.jsonEql( ['j. r. r. tolkien'] );
+		result[0].tag.should.eql( 'author' );
+		result[0].phrase.should.eql( true );
+		
+		result = tokenizer( "author:'j. r. r. tolkien'" );
+		result.should.jsonEql( ['j. r. r. tolkien'] );
+		result[0].tag.should.eql( 'author' );
+		result[0].phrase.should.eql( true );
 	});
 });
