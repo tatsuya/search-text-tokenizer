@@ -1,87 +1,102 @@
-var _ = require( 'lodash' );
 var should = require( 'should' );
 var tokenizer = require( '../lib/tokenizer' );
 
-should.Assertion.add( 'jsonEql', function( val )
-{
-	this.params = { operator: 'to be JSON eql' };
-	var actual = JSON.stringify( this.obj );
-	var expected = JSON.stringify( val );
-	this.params.details = actual + ' != ' + expected;
-	this.assert( actual == expected );
-});
-
 describe( 'tokenizer', function()
 {
+	it( 'should handle empty queries', function() {
+		tokenizer( '' )
+			.should.eql( [] );
+		tokenizer( ' ' )
+			.should.eql( [] );
+	});
+	
 	it( 'should support single word inputs', function() {
 		tokenizer( 'redbull' )
-			.should.jsonEql( ['redbull'] );
+			.should.eql( [ { term: 'redbull' } ] );
 	});
 	
 	it( 'should support multiple words', function() {
 		tokenizer( 'red bull' )
-			.should.jsonEql( ['red', 'bull'] );
+			.should.eql( [ { term: 'red' }, { term: 'bull' } ] );
 	});
 	
-	it( 'should handle empty queries', function() {
-		tokenizer( '' )
-			.should.jsonEql( [] );
-		tokenizer( ' ' )
-			.should.jsonEql( [] );
+	it( 'should support quoted phrases', function() {
+		tokenizer( '"red bull"' )
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+			} ] );
+		
+		tokenizer( "'red bull'" )
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+			} ] );
 	});
 	
 	it( 'should trim spaces', function() {
 		tokenizer( ' redbull ' )
-			.should.jsonEql( ['redbull'] );
-	});
-	
-	it( 'should support quoted phrases', function() {
-		var result = tokenizer( '"red bull"' );
-		result.should.jsonEql( ['red bull'] );
-		result[0].phrase.should.eql( true );
-		
-		result = tokenizer( "'red bull'" );
-		result.should.jsonEql( ['red bull'] );
-		result[0].phrase.should.eql( true );
+			.should.eql( [ { term: 'redbull' } ] );
+			
+		tokenizer( '" red bull "' )
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+			} ] );
 	});
 	
 	it( 'should not interpret apostrophes as single quoted phrases', function() {
 		tokenizer( "don't won't" )
-			.should.jsonEql( ["don't", "won't"] );
+			.should.eql( [ { term: "don't" }, { term: "won't" } ] );
 	});
 	
 	it( 'should support multiple phrases', function() {
 		tokenizer( '"red bull" "gives you wings"' )
-			.should.jsonEql( ['red bull', 'gives you wings'] );
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+			}, {
+				term: 'gives you wings',
+				phrase: true,
+			} ] );
 	});
 	
-	it( 'should support single words and phrases', function() {
+	it( 'should support a combination of words and phrases', function() {
 		tokenizer( 'red bull "gives you wings"' )
-			.should.jsonEql( ['red', 'bull', 'gives you wings'] );
+			.should.eql( [ { term: 'red' }, { term: 'bull' }, {
+				term: 'gives you wings',
+				phrase: true,
+			} ] );
 	});
 	
 	it( 'should support broken phrases', function() {
 		tokenizer( 'red bull "gives you wings' )
-			.should.jsonEql( ['red', 'bull', '"gives', 'you', 'wings'] );
+			.should.eql( [ { term: 'red' }, { term: 'bull' }, { term: '"gives' }, { term: 'you' }, { term: 'wings' } ] );
 		tokenizer( 'red bull gives you wings"' )
-			.should.jsonEql( ['red', 'bull', 'gives', 'you', 'wings"'] );
+			.should.eql( [ { term: 'red' }, { term: 'bull' }, { term: 'gives' }, { term: 'you' }, { term: 'wings"' } ] );
 	});
 	
 	it( 'should support tagged words', function() {
-		var result = tokenizer( 'author:tolkien' );
-		result.should.jsonEql( ['tolkien'] );
-		result[0].tag.should.eql( 'author' );
+		tokenizer( 'author:tolkien' )
+			.should.eql( [ {
+				term: 'tolkien',
+				tag: 'author',
+			} ] );
 	});
 	
 	it( 'should support tagged phrases', function() {
-		var result = tokenizer( 'author:"j. r. r. tolkien"' );
-		result.should.jsonEql( ['j. r. r. tolkien'] );
-		result[0].tag.should.eql( 'author' );
-		result[0].phrase.should.eql( true );
+		tokenizer( 'author:"j. r. r. tolkien"' )
+			.should.eql( [ {
+				term: 'j. r. r. tolkien',
+				phrase: true,
+				tag: 'author',
+			} ] );
 		
-		result = tokenizer( "author:'j. r. r. tolkien'" );
-		result.should.jsonEql( ['j. r. r. tolkien'] );
-		result[0].tag.should.eql( 'author' );
-		result[0].phrase.should.eql( true );
+		tokenizer( "author:'j. r. r. tolkien'" )
+			.should.eql( [ {
+				term: 'j. r. r. tolkien',
+				phrase: true,
+				tag: 'author',
+			} ] );
 	});
 });
