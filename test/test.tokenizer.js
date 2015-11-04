@@ -27,6 +27,12 @@ describe( 'tokenizer', function()
 				phrase: true,
 			} ] );
 		
+		tokenizer( '"redbull"' )
+			.should.eql( [ {
+				term: 'redbull',
+				phrase: true,
+			} ] );
+		
 		tokenizer( "'red bull'" )
 			.should.eql( [ {
 				term: 'red bull',
