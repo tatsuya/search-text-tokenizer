@@ -2,18 +2,25 @@
 
 [![Build Status](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer.svg?branch=master)](https://travis-ci.org/tatsuyaoiw/search-text-tokenizer)
 
-Tokenize a search keyword text in the same manner as Google does.
+A search query tokeniser inspired by Google.
 
-- Split space-delimitered keyword string into an array of keywords
-- Treat dobule-quoted keywords as phrase
+- Split a space-delimitered query string into an array of terms
+- Treat quoted terms as phrases
+- Support tagged terms (tag:term)
 
-## Example
+## Examples
 
 ```js
-var tokenizer = require('search-text-tokenizer');
+var tokenizer = require( 'search-text-tokenizer' );
 
-console.log(tokenizer('red bull'));  // ['red', 'bull']
-console.log(tokenizer('"red bull" "gives you wings"'));  // ['"red bull"', '"gives you wings"']
+console.log( tokenizer( 'red bull' ) );
+// [ { term: 'red' }, { term: 'bull' } ]
+
+var result = console.log( tokenizer( '"red bull" "gives you wings"' ) );
+// [ { term: 'red bull', phrase: true }, { term: 'gives you wings', phrase: true } ]
+
+result = console.log( tokenizer( 'author:tolkien' ) );
+// [ { term: 'tolkien', tag: 'author' } ]
 ```
 
 ## Installation
@@ -24,18 +31,13 @@ $ npm install search-text-tokenizer
 
 ## Running test
 
-To run the test suite first invoke the following command in the project directory.
+To run the test suite enter these commands in the project directory.
 
 ```
 $ npm install
-```
-
-then run the tests:
-
-```
 $ npm test
 ```
 
 ## License
 
-MIT © Tatsuya Oiwa
+MIT © Tatsuya Oiwa, Dannii Willis
