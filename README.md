@@ -14,15 +14,13 @@ A search query tokeniser inspired by Google.
 var tokenizer = require( 'search-text-tokenizer' );
 
 console.log( tokenizer( 'red bull' ) );
-// [ 'red', 'bull' ]
+// [ { term: 'red' }, { term: 'bull' } ]
 
 var result = console.log( tokenizer( '"red bull" "gives you wings"' ) );
-// [ 'red bull', 'gives you wings' ]
-// result[0].phrase === true
+// [ { term: 'red bull', phrase: true }, { term: 'gives you wings', phrase: true } ]
 
 result = console.log( tokenizer( 'author:tolkien' ) );
-// [ 'tolkien' ]
-// result[0].tag === 'author'
+// [ { term: 'tolkien', tag: 'author' } ]
 ```
 
 ## Installation
@@ -33,7 +31,7 @@ $ npm install search-text-tokenizer
 
 ## Running test
 
-To run the test suite first invoke the following commands in the project directory.
+To run the test suite enter these commands in the project directory.
 
 ```
 $ npm install
