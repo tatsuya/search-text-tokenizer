@@ -4,7 +4,7 @@
   "description": "A tokenizer for Google-like search queries",
   "main": "index",
   "dependencies": {
-    "lodash": "^3.10.0"
+    "lodash": "^4.0.0"
   },
   "devDependencies": {
     "mocha": "*",
