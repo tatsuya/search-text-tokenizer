@@ -106,27 +106,27 @@ describe( 'tokenizer', function()
 			} ] );
 	});
 
-	it( 'should support negation', function() {
+	it( 'should support exclusion', function() {
 		tokenizer( '-redbull' )
 			.should.eql( [ {
 				term: 'redbull',
-				not: true
+				exclude: true
 			} ] );
 	});
 
-	it( 'should support negation of phrases', function() {
+	it( 'should support exclusion of phrases', function() {
 		tokenizer( '-"red bull"' )
 			.should.eql( [ {
 				term: 'red bull',
 				phrase: true,
-				not: true
+				exclude: true
 			} ] );
 
 		tokenizer( "-'red bull'" )
 			.should.eql( [ {
 				term: 'red bull',
 				phrase: true,
-				not: true
+				exclude: true
 			} ] );
 	});
 });
