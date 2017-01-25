@@ -105,4 +105,28 @@ describe( 'tokenizer', function()
 				tag: 'author',
 			} ] );
 	});
+
+	it( 'should support exclusion', function() {
+		tokenizer( '-redbull' )
+			.should.eql( [ {
+				term: 'redbull',
+				exclude: true
+			} ] );
+	});
+
+	it( 'should support exclusion of phrases', function() {
+		tokenizer( '-"red bull"' )
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+				exclude: true
+			} ] );
+
+		tokenizer( "-'red bull'" )
+			.should.eql( [ {
+				term: 'red bull',
+				phrase: true,
+				exclude: true
+			} ] );
+	});
 });

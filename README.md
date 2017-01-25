@@ -7,6 +7,7 @@ A search query tokeniser inspired by Google.
 - Split a space-delimitered query string into an array of terms
 - Treat quoted terms as phrases
 - Support tagged terms (tag:term)
+- Detect excluded terms (-term)
 
 ## Examples
 
@@ -21,6 +22,9 @@ var result = console.log( tokenizer( '"red bull" "gives you wings"' ) );
 
 result = console.log( tokenizer( 'author:tolkien' ) );
 // [ { term: 'tolkien', tag: 'author' } ]
+
+result = console.log( tokenizer( '-car' ) );
+// [ { term: 'car', exclude: true } ]
 ```
 
 ## Installation
@@ -40,4 +44,4 @@ $ npm test
 
 ## License
 
-MIT © Tatsuya Oiwa, Dannii Willis
+MIT © Tatsuya Oiwa, Dannii Willis, James Anthony Bruno
