@@ -17,14 +17,14 @@ var tokenizer = require( 'search-text-tokenizer' );
 console.log( tokenizer( 'red bull' ) );
 // [ { term: 'red' }, { term: 'bull' } ]
 
-var result = console.log( tokenizer( '"red bull" "gives you wings"' ) );
+console.log( tokenizer( '"red bull" "gives you wings"' ) );
 // [ { term: 'red bull', phrase: true }, { term: 'gives you wings', phrase: true } ]
 
-result = console.log( tokenizer( 'author:tolkien' ) );
+console.log( tokenizer( 'author:tolkien' ) );
 // [ { term: 'tolkien', tag: 'author' } ]
 
-result = console.log( tokenizer( '-car' ) );
-// [ { term: 'car', exclude: true } ]
+console.log( tokenizer( 'jaguars -car' ) );
+// [ { term: 'jaguars'}, { term: 'car', exclude: true } ]
 ```
 
 ## Installation
@@ -35,7 +35,7 @@ $ npm install search-text-tokenizer
 
 ## Running test
 
-To run the test suite enter these commands in the project directory.
+To run the test suite run the following commands in the project directory.
 
 ```
 $ npm install
