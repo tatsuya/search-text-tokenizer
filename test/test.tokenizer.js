@@ -114,6 +114,17 @@ describe( 'tokenizer', function()
 			} ] );
 	});
 
+  it( 'should support exclusin on multiple words', function() {
+		tokenizer( 'jaguars -car' )
+			.should.eql( [ {
+				term: 'jaguars'
+			},
+			{
+				term: 'car',
+				exclude: true
+			} ] );
+  });
+
 	it( 'should support exclusion of phrases', function() {
 		tokenizer( '-"red bull"' )
 			.should.eql( [ {
